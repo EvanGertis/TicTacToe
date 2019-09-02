@@ -5,7 +5,7 @@ import java.util.ArrayList;
 public class GameBoard {
 	private int rowSize;
 	private int colSize;
-	public static boolean[][] board;
+	public static char[][] board;
 	
 	public GameBoard() {
 		this.rowSize = 3;
@@ -14,20 +14,25 @@ public class GameBoard {
 	}
 	
 	public void reset() {
-		this.board = new boolean[rowSize][colSize];
+		this.board = new char[rowSize][colSize];
+		for(int i = 0; i < rowSize; i++) {
+			for(int j = 0; j < colSize; j++) {
+				this.board[i][j] = ' ';
+			}
+		}
 	}
 	
-	public void place(Coordinates coordinates, Player player) {
-		board[coordinates.x][coordinates.y] = player.isPlayerX;
+	public void place(int x, int y, Player player) {
+		board[x][y] = player.characterEncodedSymbol;
 	}
 	
 	@Override
 	public String toString() {
 		String stringVersionOfBoard = "";
 		for(int i = 0; i < rowSize; i++) {
-			stringVersionOfBoard += '|';
+			stringVersionOfBoard += "| ";
 			for(int j = 0; j < colSize; j++) {
-				stringVersionOfBoard += convertToPlayerType(this.board[i][j]) + " | ";
+				stringVersionOfBoard += this.board[i][j] + " | ";
 			}
 			stringVersionOfBoard += '\n';
 		}
@@ -35,19 +40,39 @@ public class GameBoard {
 		return stringVersionOfBoard;
 	}
 	
-	private char convertToPlayerType(boolean playerSymbol) {
-		return playerSymbol ? 'X' : 'Y';
-	}
-	
-	private static class Coordinates{
-		public int x;
-		public int y;
+	public boolean isGameOver() {
 		
-		public Coordinates() {};
-		public Coordinates(int X, int Y) {
-			this.x = X;
-			this.y = Y;
-		};
+		//check horizontal rules
+		if(board[0][0] == board[0][1] && board[0][0] == board[0][2] && board[0][1] == board[0][2]) {
+			if(board[0][0] != ' ' && board[0][1] != ' ' && board[0][2] != ' ')
+				return true;
+		} else if(board[1][0] == board[1][1] && board[1][0] == board[1][2] && board[1][1] == board[1][2]) {
+			if(board[1][0] != ' ' && board[1][1] != ' ' && board[1][2] != ' ')
+				return true;
+		} else if(board[2][0] == board[2][1] && board[2][0] == board[2][2] && board[2][1] == board[2][2]) {
+			if(board[2][0] != ' ' && board[2][1] != ' ' && board[2][2] != ' ')
+				return true;
+		}
 		
+		//check vertical rules
+		if(board[0][0] == board[1][0] && board[0][0] == board[2][0] && board[1][0] == board[2][0]) {
+			if(board[0][0] != ' ' && board[1][0] != ' ' && board[2][0] != ' ')
+				return true;
+		} else if(board[0][1] == board[1][1] && board[0][1] == board[2][1] && board[1][1] == board[2][1]) {
+			if(board[0][1] != ' ' && board[1][1] != ' ' && board[2][1] != ' ')
+				return true;
+		} else if(board[0][2] == board[2][1] && board[0][2] == board[2][2] && board[2][1] == board[2][2]) {
+			if(board[0][2] != ' ' && board[2][1] != ' ' && board[2][1] != ' ')
+				return true;
+		}
+		
+		//check diagonal rule
+		if(board[0][0] == board[1][1] && board[0][0] == board[2][2] && board[1][1] == board[2][2]) {
+			if(board[0][0] != ' ' && board[1][1] != ' ' && board[2][2] != ' ')
+				return true;
+		}
+		
+		return false;							
 	}
+			
 }
