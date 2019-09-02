@@ -19,14 +19,14 @@ public class Main {
 			do {
 				
 				if(turn == 0) {
-					System.out.println("PlayerX-- score: " + playerX.score);
+					System.out.println("PlayerX score: " + playerX.score);
 				} else {
-					System.out.println("PlayerY-- score: " + playerY.score);
+					System.out.println("PlayerY score: " + playerY.score);
 				}
 				
-				System.out.println("Please Enter the row: ");
+				System.out.println("Please Enter the row 0, 1, or 2: ");
 				int row = Integer.parseInt(scanner.nextLine());
-				System.out.println("Please Enter the column: ");
+				System.out.println("Please Enter the column 0, 1, or 2: ");
 				int col = Integer.parseInt(scanner.nextLine());
 				
 				if(turn == 0) {
@@ -45,14 +45,12 @@ public class Main {
 			choice = scanner.nextLine();
 			
 			if(turn == 0) {
-				playerX.score++;
-			} else {
 				playerY.score++;
+			} else {
+				playerX.score++;
 			}
 			
 			gameBoard.reset();
-			turn++;
-			turn = turn % 2;
 		}
 	}
 }

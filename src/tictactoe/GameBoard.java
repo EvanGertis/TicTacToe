@@ -23,7 +23,17 @@ public class GameBoard {
 	}
 	
 	public void place(int x, int y, Player player) {
-		board[x][y] = player.characterEncodedSymbol;
+		if(x == 0 || x == 1 || x == 2) {
+			if(y == 0 || y == 1 || y == 2) {
+				if(board[x][y] == ' ') {
+					board[x][y] = player.characterEncodedSymbol;
+					return;
+				}
+			}
+		}
+		
+		System.out.println("unauthorized move");
+		return;
 	}
 	
 	@Override
